@@ -10,6 +10,11 @@
     { "name": "Philipp Burgmer" },
     { "name": "Björn Berthelot", "url":"http://www.etiskapp.com" }
   ],
+  "main": [
+    "dist/js/w11k-flash.scss",
+    "dist/js/w11k-flash.js",
+    "dist/js/w11k-flash.tpl.js"
+  ],
 
   "repository": {
     "type": "git",

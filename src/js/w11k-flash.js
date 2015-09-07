@@ -118,19 +118,6 @@ angular.module('w11k.flash').directive('w11kFlash', ['swfobject', '$window', '$q
 
       var flashId = w11kFlashRegistry.getFlashId();
 
-      var customConfig = scope.$eval(attrs.w11kFlash);
-
-      var config = {
-        flashvars: {},
-        params: {},
-        attributes: {}
-      };
-
-      deepMerge(config, w11kFlashConfig.swfObject);
-      deepMerge(config, customConfig);
-
-      config.flashvars.w11kFlashId = flashId;
-
       var deferred = $q.defer();
 
       w11kFlashRegistry.registerFlash(flashId, {
@@ -143,10 +130,23 @@ angular.module('w11k.flash').directive('w11kFlash', ['swfobject', '$window', '$q
         w11kFlashRegistry.unregisterFlash(flashId);
       });
 
-      if (angular.isFunction(config.callback)) {
-        config.callback(deferred.promise);
-      }
       var includeFlash = function () {
+        var customConfig = scope.$eval(attrs.w11kFlash);
+
+        var config = {
+          flashvars: {},
+          params: {},
+          attributes: {}
+        };
+
+        deepMerge(config, w11kFlashConfig.swfObject);
+        deepMerge(config, customConfig);
+
+        config.flashvars.w11kFlashId = flashId;
+        if (angular.isFunction(config.callback)) {
+          config.callback(deferred.promise);
+        }
+
         flashContainer.append(flashElement);
         flashElement.attr('id', flashId);
 
